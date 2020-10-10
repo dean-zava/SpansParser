@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import ReactDOM from "react-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import {
     Button,
     Form,
     FormGroup,
-    Table,
     Label,
     Input,
     Alert
 } from 'reactstrap';
+
+var OPERATORS = ["<", ">", "="]
 
 class App extends Component {
     state = {
@@ -26,9 +25,9 @@ class App extends Component {
     }
 
     onSubmit = () => {
-        console.log("func called");
-        let cond_reg = ["([^=<>]+)[=<>]([^=<>]+)"];
-        let multiply_cond_reg = `(${cond_reg}(((\s*)&&(\s*)${cond_reg}(\s*))*))`;
+        let unite_operators = OPERATORS.join("")
+        let cond_reg = [`([^${unite_operators}]+)[${unite_operators}]([^${unite_operators}]+)`];
+        let multiply_cond_reg = `(${cond_reg}(((s*)&&(s*)${cond_reg}(s*))*))`;
         let final_regexp = `^${multiply_cond_reg}{0,1}$`;
 
         if (!(new RegExp(final_regexp).test(this.state.name))) {
@@ -38,12 +37,18 @@ class App extends Component {
         }
         this.setState({ error_msg: ""});
 
+        let conditions = this.state.name.split("&&").map(cond => {
+            let operator = OPERATORS.reduce((last_op, op) => cond.includes(op) ? op : last_op);
+            let operands = cond.split(operator).map(operand => operand.trim());
+            return {operands, operator}
+        })
+
+        console.log(conditions)
+
 
         this.setState({text_box: this.state.name})
         axios.get("/ping", {
-                params: {
-                    some: "123"
-                }
+                params: conditions
             }).then((res) => console.log(res));
     }
 
