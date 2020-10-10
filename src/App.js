@@ -30,26 +30,27 @@ class App extends Component {
         let multiply_cond_reg = `(${cond_reg}(((s*)&&(s*)${cond_reg}(s*))*))`;
         let final_regexp = `^${multiply_cond_reg}{0,1}$`;
 
+        // checking the input is valid
         if (!(new RegExp(final_regexp).test(this.state.name))) {
             console.log(`check did not pass for ${this.state.name}`)
             this.setState({ error_msg: "Invalid input"});
             return;
         }
-        this.setState({ error_msg: ""});
 
-        let conditions = this.state.name.split("&&").map(cond => {
-            let operator = OPERATORS.reduce((last_op, op) => cond.includes(op) ? op : last_op);
+        // serializing input
+        let params = this.state.name.split("&&").map(cond => {
+            let operator = OPERATORS.find((op) => cond.includes(op));
             let operands = cond.split(operator).map(operand => operand.trim());
-            return {operands, operator}
+            return {field: operands[0], val: operands[1], operator}
         })
+        console.log(params)
 
-        console.log(conditions)
-
-
-        this.setState({text_box: this.state.name})
-        axios.get("/ping", {
-                params: conditions
-            }).then((res) => console.log(res));
+        // sending result to server and parsing answer 
+        axios.get("/ping", { params })
+            .then((res) => 
+                res.data.error_msg ?
+                this.setState({ error_msg: res.data.error_msg}) :
+                this.setState({ text_box: JSON.stringify(res.data, undefined, 4), error_msg: ""}));
     }
 
     render = () => (
@@ -69,18 +70,18 @@ class App extends Component {
                 className="mb-3"
                 onChange={this.onChange}
             />
-        <FormGroup>
-        <Label for="exampleText">Text Area</Label>
-        <Input type="textarea" name="text" id="exampleText" value={this.state.text_box}/>
-        </FormGroup>
+            <FormGroup>
+                <Label for="exampleText">Text Area</Label>
+                <Input type="textarea" rows="20" name="text" id="exampleText" value={this.state.text_box}/>
+            </FormGroup>
 
-        <Button
-        color="primary"
-        block
-        onClick={this.onSubmit}
-        >Send</Button>
-        </FormGroup>
-        </Form>
+            <Button
+                color="primary"
+                block
+                onClick={this.onSubmit}
+                >Send</Button>
+            </FormGroup>
+            </Form>
         </div>
     );
 }
