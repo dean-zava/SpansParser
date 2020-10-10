@@ -15,7 +15,7 @@ app.get("/ping", function (req, res) {
     let operand_to_lambda = {
         "<" : ((x,y) => x < y),
         ">" : ((x,y) => x > y),
-        "=" : ((x,y) => x === y)
+        "=" : ((x,y) => x == y)
     }
 
     fs.readFile(FILENAME, "utf8" , (err, data) => {
