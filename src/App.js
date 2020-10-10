@@ -15,10 +15,10 @@ import {
 } from 'reactstrap';
 
 class App extends Component {
-
     state = {
         name: "",
-        text_box: ""
+        text_box: "",
+        error_msg: "",
     }
 
     onChange = (e) => {
@@ -27,6 +27,18 @@ class App extends Component {
 
     onSubmit = () => {
         console.log("func called");
+        let cond_reg = ["([^=<>]+)[=<>]([^=<>]+)"];
+        let multiply_cond_reg = `(${cond_reg}(((\s*)&&(\s*)${cond_reg}(\s*))*))`;
+        let final_regexp = `^${multiply_cond_reg}{0,1}$`;
+
+        if (!(new RegExp(final_regexp).test(this.state.name))) {
+            console.log(`check did not pass for ${this.state.name}`)
+            this.setState({ error_msg: "Invalid input"});
+            return;
+        }
+        this.setState({ error_msg: ""});
+
+
         this.setState({text_box: this.state.name})
         axios.get("/ping", {
                 params: {
@@ -37,6 +49,10 @@ class App extends Component {
 
     render = () => (
         <div className="App">
+            { this.state.error_msg ?
+                <Alert color="danger" style={{marginRight: '1rem', marginLeft: '1rem', marginTop: '1rem'}}>
+                    { this.state.error_msg }</Alert> :
+                null }
             <Form>
             <FormGroup style={{marginRight: '1rem', marginLeft: '1rem', marginTop: '1rem', textAlign: "left"}}>
             <Label for="name">Name</Label>
