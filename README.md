@@ -21,6 +21,8 @@ The query should be a conjuction of one or more clauses. Each clause will contai
 Example queries:
 ```sh
 resource.type=http && duration > 60001498 && span.kind=server
+```
+```sh
 peer.port=41148
 ```
 To get the result press the send button.
