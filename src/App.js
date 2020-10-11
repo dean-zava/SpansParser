@@ -46,7 +46,7 @@ class App extends Component {
         console.log(params)
 
         // sending result to server and parsing answer 
-        axios.get("/ping", { params })
+        axios.get("/get_span", { params })
             .then((res) => 
                 res.data.error_msg ?
                 this.setState({ error_msg: res.data.error_msg}) :

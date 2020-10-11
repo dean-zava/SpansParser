@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, "build")));
 
 const FILENAME = "./spans.json";
 
-app.get("/ping", function (req, res) {
+app.get("/get_span", function (req, res) {
     let conds = Object.values(req.query).map(cond => JSON.parse(cond))
     console.log(conds)
     console.log("received get request");
