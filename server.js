@@ -34,10 +34,16 @@ app.get("/get_span", function (req, res) {
             // if it is a tag check that the tag stands in the condition
             else {
                 let selected_tag = span.tags.find(tag => tag.key === cond.field);
-                return (selected_tag == undefined ?
-                    false :
+                if (selected_tag == undefined) {
+                    return false;
+                }
+                else {
                     // take the value from the json that isn't the key
-                    operand_to_lambda[cond.operator](Object.values(selected_tag)[1], cond.val));
+                    let key_for_val = Object.keys(selected_tag)[0] === "key" ?
+                        Object.keys(selected_tag)[1] :
+                        Object.keys(selected_tag)[0];
+                    return operand_to_lambda[cond.operator](selected_tag[key_for_val], cond.val);
+                }
             }
         }))
     
