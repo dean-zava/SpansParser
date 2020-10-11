@@ -32,3 +32,4 @@ To get the result press the send button.
   * Such UI may enable us the option to ask the user whether the following field is a tag key, and therefore potentially improve efficiency by sparing the span attribute check.
 * Support filtering with logs.
 * I am generally prefering Python over Node.js. I chose Node.js since am not familar with Django yet, while I have some familiarity with Express.
+* I tried to keep the code clean, written in the functional programming paradigm and relativley stable.
