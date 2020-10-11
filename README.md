@@ -6,12 +6,12 @@ To download dependecies, run from the repository root directory:
 npm i
 ```
 
-Then to run the server
+Running the server:
 ```sh
 node server.js
 ```
 
-To run the clinet
+Running the client:
 ```sh
 npm start
 ```
