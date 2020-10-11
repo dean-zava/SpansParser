@@ -1,7 +1,7 @@
 # Span Viewer
 
 ## Running The Client & Server
-To download dependecies run in the repository root directory
+To download dependecies, run from the repository root directory:
 ```sh
 npm i
 ```
