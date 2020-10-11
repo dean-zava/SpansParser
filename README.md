@@ -18,7 +18,7 @@ npm start
 
 ## Usage
 The query should be a conjuction of one or more clauses. Each clause will contain a field, an operand, and a value to filter by. fields can be either internal tag keys, or span attributes (e.g. duration, timestamp etc.). Supported opernads are: "=", "<" or ">".
-* Note tthat the field token should be on the left side and the value token should be on the right side.
+* Note that the field token should be on the left side and the value token should be on the right side.
 Example queries:
 ```sh
 resource.type=http && duration > 60001498 && span.kind=server
