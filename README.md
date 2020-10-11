@@ -29,6 +29,6 @@ To get the result press the send button.
 
 ## Implementation Notes & Possible Improvments
 * Perhaps creating an easier UI that includes options that are more inforamtive and user friendly. 
-  * Such UI may enable us the option to ask the user whether the following field is a tag key, and therefor potentially improve efficiency by sparing the span attribute check.
+  * Such UI may enable us the option to ask the user whether the following field is a tag key, and therefore potentially improve efficiency by sparing the span attribute check.
 * Support filtering with logs.
-* I am generally prefering Python over Node.js, It's just the I am not familar with Django yet, while I have some familiarity with Express.
+* I am generally prefering Python over Node.js. I choose Node.js since am not familar with Django yet, while I have some familiarity with Express.
